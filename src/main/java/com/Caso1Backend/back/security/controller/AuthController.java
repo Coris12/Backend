@@ -75,18 +75,24 @@ public class AuthController {
                 passwordEncoder.encode(nuevoUsuario.getPassword()));
         Set<String> rolesStr = nuevoUsuario.getRoles();
         Set<Rol> roles = new HashSet<>();
+
         for (String rol : rolesStr) {
-            System.out.println(rol);
              switch (rol) {
                  case "ROL_CLIENTE":
                      roles.add(rolService.getByRolNombre(RolNombre.ROL_CLIENTE).get());
-                     System.out.println("se anadio el rol"+rol);
                      break;
                  case "ROL_ADMIN":
                      roles.add(rolService.getByRolNombre(RolNombre.ROL_ADMIN).get());
-                     System.out.println("se anadio el rol: "+rol);
                      break;
-
+                 case "ROLE_TALLER":
+                     roles.add(rolService.getByRolNombre(RolNombre.ROLE_TALLER).get());
+                     break;
+                 case "ROLE_CONCESONARIA":
+                     roles.add(rolService.getByRolNombre(RolNombre.ROLE_CONCESONARIA).get());
+                     break;
+                 case "ROLE_COMERCIALIZADORA":
+                     roles.add(rolService.getByRolNombre(RolNombre.ROLE_COMERCIALIZADORA).get());
+                     break;
             }
         }
         usuario.setRoles(roles);
@@ -114,4 +120,3 @@ public class AuthController {
         return new ResponseEntity(jwt, HttpStatus.OK);
     }
 }
-///prueba
