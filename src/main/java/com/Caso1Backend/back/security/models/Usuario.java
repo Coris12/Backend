@@ -24,7 +24,6 @@ import javax.persistence.ManyToMany;
  */
 @Entity
 public class Usuario {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

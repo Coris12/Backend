@@ -24,7 +24,9 @@ public class NuevoUsuario {
     private String email;
     @NotBlank
     private String password;
+
     private Set<String> roles = new HashSet<>();
+
 
     public String getNombre() {
         return nombre;
@@ -61,7 +63,6 @@ public class NuevoUsuario {
     public Set<String> getRoles() {
         return roles;
     }
-
     public void setRoles(Set<String> roles) {
         this.roles = roles;
     }

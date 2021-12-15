@@ -15,10 +15,12 @@ import com.Caso1Backend.back.security.models.Rol;
 import com.Caso1Backend.back.security.models.Usuario;
 import com.Caso1Backend.back.security.service.RolService;
 import com.Caso1Backend.back.security.service.UsuarioService;
+
 import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +37,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
-
+ *
  */
 @RestController
 @RequestMapping("/auth")
@@ -70,19 +72,23 @@ public class AuthController {
         }
         Usuario usuario
                 = new Usuario(nuevoUsuario.getNombre(), nuevoUsuario.getNombreUsuario(), nuevoUsuario.getEmail(),
-                        passwordEncoder.encode(nuevoUsuario.getPassword()));
+                passwordEncoder.encode(nuevoUsuario.getPassword()));
+        Set<String> rolesStr = nuevoUsuario.getRoles();
         Set<Rol> roles = new HashSet<>();
-        //roles.add(rolService.getByRolNombre(RolNombre.ROLE_TALLER).get());
-        if (nuevoUsuario.getRoles().contains("taller")) {
-            roles.add(rolService.getByRolNombre(RolNombre.ROLE_TALLER).get());
-        }
-        if (nuevoUsuario.getRoles().contains("concesionaria")) {
-            roles.add(rolService.getByRolNombre(RolNombre.ROLE_CONCESONARIA).get());
-        }
-        if (nuevoUsuario.getRoles().contains("comercializadora")) {
-            roles.add(rolService.getByRolNombre(RolNombre.ROLE_COMERCIALIZADORA).get());
-        }
+        for (String rol : rolesStr) {
+            System.out.println(rol);
+             switch (rol) {
+                 case "ROL_CLIENTE":
+                     roles.add(rolService.getByRolNombre(RolNombre.ROL_CLIENTE).get());
+                     System.out.println("se anadio el rol"+rol);
+                     break;
+                 case "ROL_ADMIN":
+                     roles.add(rolService.getByRolNombre(RolNombre.ROL_ADMIN).get());
+                     System.out.println("se anadio el rol: "+rol);
+                     break;
 
+            }
+        }
         usuario.setRoles(roles);
         usuarioService.save(usuario);
         return new ResponseEntity(new Mensaje("usuario guardado"), HttpStatus.CREATED);

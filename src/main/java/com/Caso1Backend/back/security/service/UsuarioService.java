@@ -7,15 +7,14 @@ package com.Caso1Backend.back.security.service;
 
 import com.Caso1Backend.back.security.models.Usuario;
 import com.Caso1Backend.back.security.repository.UsuarioRepository;
+
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author LENOVO
- */
+
 @Service
 @Transactional
 public class UsuarioService {
@@ -29,6 +28,10 @@ public class UsuarioService {
 
     public boolean existsByNombreUsuario(String nombreUsuario) {
         return usuarioRepository.existsByNombreUsuario(nombreUsuario);
+    }
+
+    public List<Usuario> listarUsers(){
+        return usuarioRepository.findAll();
     }
 
     public boolean existsByEmail(String email) {
